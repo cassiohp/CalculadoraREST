@@ -76,17 +76,33 @@ public class JavaEE8Resource {
     }
     
     @POST
-    @Path("somar")
+    @Path("calcular")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response somarPost(String expressao) {
+    public Response calcularPost(String expressao) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Formula formula = mapper.readValue(expressao, Formula.class);
-            int resultado = formula.getDig1() + formula.getDig2();
-            return Response.ok(resultado).build();
+            if(formula.getOperador() == '+'){
+                int resultado = formula.getDig1() + formula.getDig2();
+                return Response.ok(resultado).build();
+            }else if(formula.getOperador() == '-'){
+                int resultado = formula.getDig1() - formula.getDig2();
+                return Response.ok(resultado).build();
+            }else if(formula.getOperador() == '*'){
+                int resultado = formula.getDig1() * formula.getDig2();
+                return Response.ok(resultado).build();
+            }else if(formula.getOperador() == '/'){
+                float resultado = formula.getDig1() * formula.getDig2();
+                if (formula.getDig2() == 0) {
+                    return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+                return Response.ok(resultado).build();
+            }
+            
         } catch (JsonProcessingException ex) {            
             return Response.serverError().build();
         }
+       return Response.status(Response.Status.BAD_REQUEST).build();
     }
    
 }
