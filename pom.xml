@@ -5,7 +5,7 @@
     <artifactId>exemplo_rest</artifactId>
     <version>1</version>
     <packaging>war</packaging>
-    <name>ExemploREST</name>
+    <name>CalculadoraRest</name>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
